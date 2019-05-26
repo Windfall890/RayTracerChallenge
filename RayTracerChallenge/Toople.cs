@@ -12,7 +12,7 @@ namespace RayTracerChallenge
         public float W { get; }
         public bool IsPoint => FloatClose(W, 1f);
         public bool IsVector => FloatClose(W, 0f);
-        public float Magnitude => (float) Math.Sqrt(X*X + Y*Y + Z*Z + W*W);
+        public float Magnitude => (float) Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
 
         public Toople(float x, float y, float z, float w)
         {
@@ -30,6 +30,14 @@ namespace RayTracerChallenge
         public static Toople Vector(float x, float y, float z)
         {
             return new Toople(x, y, z, 0f);
+        }
+
+        public Toople Normalize()
+        {
+            return new Toople(X / Magnitude,
+                              Y / Magnitude,
+                              Z / Magnitude,
+                              W / Magnitude);
         }
 
         #region operators
@@ -109,5 +117,20 @@ namespace RayTracerChallenge
         }
 
         #endregion
+
+        public float Dot(Toople t)
+        {
+            return X * t.X +
+                   Y * t.Y +
+                   Z * t.Z +
+                   W * t.W;
+        }
+
+        public Toople Cross(Toople t)
+        {
+            return Vector(Y * t.Z - Z * t.Y,
+            Z * t.X - X * t.Z,
+            X * t.Y - Y * t.X);
+        }
     }
 }

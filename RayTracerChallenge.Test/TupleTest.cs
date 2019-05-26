@@ -58,7 +58,7 @@ namespace RayTracerChallenge.Test
         #region equality
 
         [Fact]
-        public void equalsWorks()
+        public void EqualsWorks()
         {
             var point = Toople.Point(1f, 2f, 3f);
 
@@ -77,7 +77,7 @@ namespace RayTracerChallenge.Test
         [InlineData(1f, 2.1f, 3f, 0f, false)]
         [InlineData(1f, 2f, 3.1f, 0f, false)]
         [InlineData(1f, 2f, 3f, 1f, false)]
-        public void detailedEquals(float x, float y, float z, float w, bool expected)
+        public void DetailedEquals(float x, float y, float z, float w, bool expected)
         {
             var p = new Toople(1f, 2f, 3f, 0f);
 
@@ -175,7 +175,7 @@ namespace RayTracerChallenge.Test
 
         #endregion
 
-        #region magnitude
+        #region vectorMath
 
         [Theory]
         [InlineData(0, 0, 0, 0)]
@@ -200,6 +200,53 @@ namespace RayTracerChallenge.Test
         {
             var v = Toople.Vector(1f, -2f, -3f);
             v.Magnitude.Should().BeApproximately(MathF.Sqrt(14f), float.Epsilon);
+        }
+
+
+        [Fact]
+        public void Normalization_simpleCase()
+        {
+            var v = Toople.Vector(4f, 0, 0);
+            v.Normalize().Should().BeEquivalentTo(Toople.Vector(1f, 0, 0));
+        }
+
+        [Fact]
+        public void Normalization_values()
+        {
+            var v = Toople.Vector(1f, 2f, 3f);
+            var sqrt = MathF.Sqrt(14f);
+            v.Normalize().Should().BeEquivalentTo(
+                Toople.Vector(1f / sqrt, 2f / sqrt, 3f / sqrt));
+        }
+
+        [Theory]
+        [InlineData(2f, 4.3f, -6.2f)]
+        [InlineData(5f, 0, 0)]
+        [InlineData(1f, 2f, 3f)]
+        public void NormalizedMagnitude_isOne(float x, float y, float z)
+        {
+            var normalize = Toople.Vector(x, y, z).Normalize();
+            normalize.Magnitude.Should().BeApproximately(1f, (float) 1e-5);
+        }
+
+        [Fact]
+        public void DotProduct()
+        {
+            var a = Toople.Vector(1f, 2f, 3f);
+            var b = Toople.Vector(2f, 3f, 4f);
+
+            var result = a.Dot(b);
+            result.Should().BeApproximately(20, float.Epsilon);
+        }
+
+        [Fact]
+        public void CrossProduct()
+        {
+            var a = Toople.Vector(1f, 2f, 3f);
+            var b = Toople.Vector(2f, 3f, 4f);
+
+            a.Cross(b).Should().BeEquivalentTo(Toople.Vector(-1f, 2f, -1f));
+            b.Cross(a).Should().BeEquivalentTo(Toople.Vector(1f, -2f, 1f));
         }
 
         #endregion
