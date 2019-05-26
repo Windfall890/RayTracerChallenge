@@ -1,6 +1,6 @@
 using System;
 
-namespace RayTracerChallenge.Test
+namespace RayTracerChallenge
 {
     public class Toople
     {
@@ -12,6 +12,7 @@ namespace RayTracerChallenge.Test
         public float W { get; }
         public bool IsPoint => FloatClose(W, 1f);
         public bool IsVector => FloatClose(W, 0f);
+        public float Magnitude => (float) Math.Sqrt(X*X + Y*Y + Z*Z + W*W);
 
         public Toople(float x, float y, float z, float w)
         {
@@ -35,18 +36,51 @@ namespace RayTracerChallenge.Test
 
         public static Toople operator +(Toople a, Toople b)
         {
-            return null;
+            return new Toople(a.X + b.X,
+                              a.Y + b.Y,
+                              a.Z + b.Z,
+                              a.W + b.W);
+        }
+
+        public static Toople operator -(Toople a, Toople b)
+        {
+            return new Toople(a.X - b.X,
+                              a.Y - b.Y,
+                              a.Z - b.Z,
+                              a.W - b.W);
+        }
+
+        public static Toople operator -(Toople a)
+        {
+            return new Toople(-a.X, -a.Y, -a.Z, -a.W);
+        }
+
+        public static Toople operator *(Toople t, float scalar)
+        {
+            return new Toople(t.X * scalar,
+                              t.Y * scalar,
+                              t.Z * scalar,
+                              t.W * scalar);
+        }
+
+        public static Toople operator /(Toople t, float scalar)
+        {
+            return new Toople(t.X / scalar,
+                              t.Y / scalar,
+                              t.Z / scalar,
+                              t.W / scalar);
         }
 
         #endregion
+
         #region equality
 
         protected bool Equals(Toople other)
         {
-            return FloatClose(W,other.W) &&
-                   FloatClose(X ,other.X) &&
-                   FloatClose(Y ,other.Y) &&
-                   FloatClose(Z ,other.Z);
+            return FloatClose(W, other.W) &&
+                   FloatClose(X, other.X) &&
+                   FloatClose(Y, other.Y) &&
+                   FloatClose(Z, other.Z);
         }
 
 
