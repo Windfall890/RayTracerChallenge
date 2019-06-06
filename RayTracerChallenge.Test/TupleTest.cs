@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using FluentAssertions;
+using RayTracerChallenge.Math;
 using Xunit;
 
 namespace RayTracerChallenge.Test

@@ -1,6 +1,4 @@
-using System;
-
-namespace RayTracerChallenge
+namespace RayTracerChallenge.Math
 {
     public class Toople
     {
@@ -12,7 +10,7 @@ namespace RayTracerChallenge
         public float W { get; }
         public bool IsPoint => FloatClose(W, 1f);
         public bool IsVector => FloatClose(W, 0f);
-        public float Magnitude => (float) Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
+        public float Magnitude => (float) System.Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
 
         public Toople(float x, float y, float z, float w)
         {
@@ -101,7 +99,7 @@ namespace RayTracerChallenge
 
         private bool FloatClose(float a, float b)
         {
-            return Math.Abs(a - b) < Tolerance;
+            return System.Math.Abs(a - b) < Tolerance;
         }
 
         public override int GetHashCode()
